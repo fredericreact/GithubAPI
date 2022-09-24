@@ -22,3 +22,18 @@ Message.propTypes = {
 ```
 
 Je peux definir en not required et fournir une valeur par defaut
+
+# props
+
+```javascript 
+const Message =({total}) =>{
+    
+}
+```
+c'est equivalent a 
+```javascript
+
+const Message =(props) =>{
+{total} = props    
+}
+```
