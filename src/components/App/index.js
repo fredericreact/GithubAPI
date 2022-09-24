@@ -5,7 +5,12 @@ import Message from '../Message'
 import ReposResults from '../ReposResults';
 import axios from 'axios';
 import Navigation from '../Navigation';
+import SingleRepo from '../SingleRepo';
 import './style.scss';
+
+import {Route} from 'react-router-dom'
+
+
 
 const API = 'https://api.github.com/search/repositories?q=';
 const FILTERS ='&sort=stars&order=desc';
@@ -87,7 +92,8 @@ useEffect(fetchData, [page]);
 return (
  
   <div className='app'>
-    <SearchBar 
+<Route exact path="/">
+<SearchBar 
     searchText={searchText}
     onSearchChange={handleSearchChange}
     onSearchSubmit={handleSearchSubmit}
@@ -96,6 +102,13 @@ return (
     <Message total={total}/>
     <ReposResults list={items}/>
     <Navigation activePage={page} changePage={handlePageChange} totalPages={totalPages}/>
+  
+</Route>
+    
+  <Route path="/repo/:orga/:repo">
+    <SingleRepo/>
+  </Route>
+
   </div>
 );
 }

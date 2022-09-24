@@ -2,11 +2,12 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import './style.scss';
 import {Card} from 'semantic-ui-react'
+import {Link} from 'react-router-dom';
 
 const ReposResults =({list}) =>{
    
     return (
-        <Card.Group>
+        <div className="repos-list">
            {
             list.map((repoObject)=> {
             
@@ -14,19 +15,24 @@ const ReposResults =({list}) =>{
             const {login, avatar_url : avatar} =owner;
             
             return (
+                <div className="repo-item">
+                <Link  to={`/repo/${login}/${name}`}>
                 <Card
+                fluid
                 key={id}
     image={avatar}
     header={name}
     meta={login}
     description={description}
   />
+  </Link>
+  </div>
             )
             
         })
            }
         
-        </Card.Group>
+           </div>
     )
 }
 
