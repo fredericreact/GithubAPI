@@ -1,28 +1,61 @@
 // == Import npm
-import React from 'react';
+import React, {useState} from 'react';
 import SearchBar from '../SearchBar';
 import Message from '../Message'
 import ReposResults from '../ReposResults';
-import data from '../../data/repos'
+import axios from 'axios';
 
 import './style.scss';
 
-const {total_count : total, items } = data;
+const API = 'https://api.github.com/search/repositories?q=';
 
 // == Composant
 const App = () => {
-  
+
+  const [results, setResults] = useState({
+  items:[],
+  searchText: "",
+  total_count:0,
+  });
+
+  const handleSearchChange = (tape)=>{
+    setResults(
+      
+      {...results,
+        searchText:tape});
+  }
+
+const fetchData =() => {
+axios ({
+  url: `${API}${results.searchText}`,
+  method:'get',
+})
+.then((res)=>{
+console.log(res.data);
+setResults({
+  ...results,
+  ...res.data 
+})
+})
+.catch((err) =>{
+  console.log(err);
+})
+};
+
+  const handleSearchSubmit = ()=>{
+    console.log('submit');
+    fetchData();
+  }
+
+const {items, total_count:total, searchText } = results;
+
 return (
  
   <div className='app'>
     <SearchBar 
-    searchText='tata'
-    onSearchChange={(tape)=>{
-      console.log(tape);
-    }}
-    onSearchSubmit={()=>{
-      console.log('submit');
-    }}
+    searchText={searchText}
+    onSearchChange={handleSearchChange}
+    onSearchSubmit={handleSearchSubmit}
     />
     <Message total={total}/>
     <ReposResults list={items}/>
