@@ -1,24 +1,31 @@
 // == Import npm
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import SearchBar from '../SearchBar';
 import Message from '../Message'
 import ReposResults from '../ReposResults';
 import axios from 'axios';
-
+import Navigation from '../Navigation';
 import './style.scss';
 
 const API = 'https://api.github.com/search/repositories?q=';
-
+const FILTERS ='&sort=stars&order=desc';
 // == Composant
 const App = () => {
 
   const [results, setResults] = useState({
   items:[],
-  searchText: "",
+  searchText: 'react',
   total_count:0,
   });
 
   const [loading, setLoading] =useState(false);
+
+  const [pagination,setPagination] = useState(
+    {
+      page: 3,
+      per_page: 9,
+    }
+  )
 
   const handleSearchChange = (tape)=>{
     setResults(
@@ -28,17 +35,22 @@ const App = () => {
   }
 
 const fetchData =() => {
+  const {searchText}=results
+  const {page, per_page:perPage} =pagination;
+
+if (searchText.length===0) return; 
+
   setLoading(true);
 axios ({
-  url: `${API}${results.searchText}`,
+  url: `${API}${searchText}${FILTERS}&page=${page}&per_page=${perPage}`,
   method:'get',
-})
+}
+)
 .then((res)=>{
-console.log(res.data);
 setResults({
   ...results,
   ...res.data ,
-  searchText:'',
+
 })
 })
 .catch((err) =>{
@@ -54,7 +66,22 @@ setResults({
     fetchData();
   }
 
+
+const handlePageChange =(nouvellepage) => {
+console.log('navigatoin', nouvellepage)
+setPagination({
+  ...pagination,
+  page:nouvellepage,
+})
+}
+
+
 const {items, total_count:total, searchText } = results;
+const {page} =pagination;
+
+useEffect(fetchData, [page]);
+
+
 
 return (
  
@@ -67,6 +94,7 @@ return (
     />
     <Message total={total}/>
     <ReposResults list={items}/>
+    <Navigation activePage={page} changePage={handlePageChange}/>
   </div>
 );
 }

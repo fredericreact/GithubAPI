@@ -39,3 +39,11 @@ const Message =(props) =>{
 {total} = props    
 }
 ```
+
+# functions
+
+```javascript
+if (searchText.length===0) return;
+```
+
+ce code permet d'arreter la fonction, ne pas lancer la suite si c'est true
