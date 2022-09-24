@@ -4,6 +4,8 @@
 $  yarn add semantic-ui-react semantic-ui-css
 ```
 
+Semantic react c'est les composants, Semantic css c'est le CSS
+
 # Images
 
 utiliser import car webpack va tout deplacer

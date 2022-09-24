@@ -18,6 +18,8 @@ const App = () => {
   total_count:0,
   });
 
+  const [loading, setLoading] =useState(false);
+
   const handleSearchChange = (tape)=>{
     setResults(
       
@@ -26,6 +28,7 @@ const App = () => {
   }
 
 const fetchData =() => {
+  setLoading(true);
 axios ({
   url: `${API}${results.searchText}`,
   method:'get',
@@ -34,11 +37,15 @@ axios ({
 console.log(res.data);
 setResults({
   ...results,
-  ...res.data 
+  ...res.data ,
+  searchText:'',
 })
 })
 .catch((err) =>{
   console.log(err);
+})
+.finally(()=>{
+  setLoading(false);
 })
 };
 
@@ -56,6 +63,7 @@ return (
     searchText={searchText}
     onSearchChange={handleSearchChange}
     onSearchSubmit={handleSearchSubmit}
+    loading={loading}
     />
     <Message total={total}/>
     <ReposResults list={items}/>

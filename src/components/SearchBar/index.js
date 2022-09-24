@@ -4,7 +4,7 @@ import './style.scss';
 import logo from '../../assets/images/logo-github.png'
 import {Input, Segment} from 'semantic-ui-react';
 
-const SearchBar =({searchText,onSearchChange, onSearchSubmit}) =>{
+const SearchBar =({searchText,onSearchChange, onSearchSubmit, loading}) =>{
     return (
         <div className="search-bar">
         <img className='logo' alt="logo" src={logo}/>
@@ -17,6 +17,7 @@ const SearchBar =({searchText,onSearchChange, onSearchSubmit}) =>{
         }}>
             <Input 
             fluid 
+            loading={loading}
             placeholder="chercher" 
             icon='search' 
             iconPosition="left"
@@ -36,6 +37,7 @@ SearchBar.propTypes ={
     searchText:PropTypes.string.isRequired,
     onSearchChange:PropTypes.func.isRequired,
     onSearchSubmit:PropTypes.func.isRequired,
+    loading:PropTypes.bool.isRequired,
 }
 
 export default SearchBar;
