@@ -22,7 +22,7 @@ const App = () => {
 
   const [pagination,setPagination] = useState(
     {
-      page: 3,
+      page: 1,
       per_page: 9,
     }
   )
@@ -78,6 +78,7 @@ setPagination({
 
 const {items, total_count:total, searchText } = results;
 const {page} =pagination;
+const totalPages = 100;
 
 useEffect(fetchData, [page]);
 
@@ -94,7 +95,7 @@ return (
     />
     <Message total={total}/>
     <ReposResults list={items}/>
-    <Navigation activePage={page} changePage={handlePageChange}/>
+    <Navigation activePage={page} changePage={handlePageChange} totalPages={totalPages}/>
   </div>
 );
 }

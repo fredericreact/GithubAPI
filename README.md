@@ -6,6 +6,14 @@ $  yarn add semantic-ui-react semantic-ui-css
 
 Semantic react c'est les composants, Semantic css c'est le CSS
 
+```javaascript
+onPageChange={(e,pageObject)=>{
+    console.log(pageObject);
+    changePage(pageObject.activePage);
+}}
+```
+fonction fournie par semantic UI dans le composant Pagination
+
 # Images
 
 utiliser import car webpack va tout deplacer

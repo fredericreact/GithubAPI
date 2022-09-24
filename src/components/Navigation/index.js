@@ -1,28 +1,25 @@
 import React from "react";
 import PropTypes from 'prop-types'
+import { Pagination } from "semantic-ui-react";
 
-const Navigation = ({changePage, activePage}) =>{
+const Navigation = ({changePage, activePage, totalPages}) =>{
     return (
         <div>
-            <button
-            type="button"
-            disabled ={activePage===1}
-            onClick={()=>{
-                console.log('prev');
-                changePage(activePage-1);
-            }}
-            >
-Precedent
-            </button>
-            <button
-            type="button"
-            onClick={()=>{
-                console.log('suiv');
-                changePage(activePage+1);
-            }}
-            >
-Suivant
-            </button>
+
+
+        <Pagination
+activaPage={activePage}
+onPageChange={(e,pageObject)=>{
+    console.log(pageObject);
+    changePage(pageObject.activePage);
+}}
+
+boundaryRange={0}
+siblingRange={1}
+
+totalPages={totalPages}        />
+
+         
         </div>
     )
 }
@@ -30,6 +27,7 @@ Suivant
 Navigation.propTypes ={
     changePage:PropTypes.func.isRequired,
     activePage: PropTypes.number.isRequired,
+    totalPages: PropTypes.number.isRequired,
 }
 
 export default Navigation;
